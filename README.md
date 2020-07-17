@@ -1,2 +1,2 @@
 # rapid-env
-tool for rapid development environment ramp up, build and distribution. 
+library with helpers for rapid development environment ramp up, build and distribution. 
