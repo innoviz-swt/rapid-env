@@ -12,7 +12,9 @@ jobs:
       - python/install-deps
       - python/save-cache
       - run:
-          command: ./manage.py test
+          command: |
+            # pytest would be a dep in requirements.txt
+            pytest
           name: Test
 
 workflows:
