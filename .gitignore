@@ -55,6 +55,7 @@ graph_info.json
 __pycache__
 *.pyd
 *.pyc
+*.egg-info
 
 # pyinstaller
 *.spec
