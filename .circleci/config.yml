@@ -20,6 +20,10 @@ jobs:
   deploy-test:
     executor: python/default
     steps:
+      - checkout
+      - python/load-cache
+      - python/install-deps
+      - python/save-cache
       - run:
           command: |
             # pytest would be a dep in requirements.txt
