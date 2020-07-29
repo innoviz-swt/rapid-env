@@ -3,9 +3,9 @@ import subprocess
 
 def run_process(cmd, cwd=None, raise_exception=True):
     if cwd is not None:
-        p = subprocess.Popen(cmd, cwd=cwd)
+        p = subprocess.Popen(cmd.split(' '), cwd=cwd)
     else:
-        p = subprocess.Popen(cmd)
+        p = subprocess.Popen(cmd.split(' '))
 
     p.wait()
 
