@@ -14,7 +14,7 @@ jobs:
       - run:
           command: |
             # pytest would be a dep in requirements.txt
-            pytest -m "not dist"
+            py.test -m "not dist"
           name: Test
 
   deploy-test:
@@ -23,7 +23,7 @@ jobs:
       - run:
           command: |
             # pytest would be a dep in requirements.txt
-            pytest -m dist
+            py.test -m dist
           name: Test
 
 workflows:
