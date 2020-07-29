@@ -19,12 +19,6 @@ jobs:
 
   deploy-test:
     executor: python/default
-    requires:
-      - build-and-test
-    filters:
-      branches:
-        only:
-          - master
     steps:
       - run:
           command: |
@@ -36,4 +30,10 @@ workflows:
   main:
     jobs:
       - build-and-test
-      - deploy-test
+      - deploy-test:
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only:
+                - master
