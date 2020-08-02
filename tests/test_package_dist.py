@@ -1,6 +1,7 @@
 from pathlib import Path
 import pytest
 
+from .context import rapidenv
 from rapidenv.process import run_process
 
 
@@ -9,4 +10,4 @@ def test_pip_install():
     cwd = Path(__file__).parent
     path = cwd.parent
     run_process(f'python -m pip install --upgrade --force-reinstall {path}', cwd=cwd)
-    run_process(f'python -c "import rapidenv"', cwd=cwd)
+    run_process(["python", "-c", '"import rapidenv"'], cwd=cwd)

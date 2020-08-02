@@ -1,0 +1,85 @@
+# Innoviz Git Ignore Template 
+
+# version control diff tools
+*.orig
+
+#Pycharm
+.idea
+
+# venv
+venv
+
+# node
+node_modules
+
+# Visual Studio Code
+*.code-workspace
+.vscode
+
+# Visual Studio
+Release
+Debug
+obj
+.vs
+*.dir
+*.user
+*.vcxproj.filters
+*.pdb
+*.ilk
+*.so
+*.exp
+packages
+Testing
+
+# unix binaries folder
+bin
+
+# CMake
+Makefile
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+ALL_BUILD.vcxproj
+ZERO_CHECK.vcxproj
+RUN_TESTS.vcxproj
+
+# conan
+conaninfo.txt
+conanbuildinfo.txt
+conanbuildinfo.cmake
+conan.lock
+graph_info.json
+
+# Python
+__pycache__
+*.pyd
+*.pyc
+*.egg-info
+
+# pytest
+.pytest_cache
+
+# pyinstaller
+*.spec
+
+# local files
+**.local.*
+*.local/
+**_local.*
+*_local/
+
+# binaries
+*.lib
+*.dll
+*.exe
+
+# dist
+dist
+
+# build
+build
+
+# logs
+*.log
+
