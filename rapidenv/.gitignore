@@ -3,7 +3,7 @@
 # version control diff tools
 *.orig
 
-# PyCharm
+#Pycharm
 .idea
 
 # venv
@@ -80,8 +80,6 @@ dist
 # build
 build
 
-# tmp
-tmp
-
 # logs
 *.log
+

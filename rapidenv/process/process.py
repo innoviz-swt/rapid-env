@@ -7,11 +7,11 @@ from ..helpers.validate import validate_obj_type
 def run_process(cmd: list or str, cwd: None or str or Path = None, raise_exception: bool = True):
     """
     runs process using Popen at cwd as working directory (if available)
-    :param cmd: if string, split into spaces seperating by " "
-    :param cwd:
-    :param raise_exception:
-    :return:
+    :param cmd: if string, split into spaces separated by " "
+    :param cwd: working directory in which to run cmd
+    :param raise_exception: if True exception will be raised on cmd error code.
     """
+
     # validate
     validate_obj_type(cmd, 'cmd', [str, list])
     validate_obj_type(cwd, 'cwd', [None, str, Path, WindowsPath, PosixPath])

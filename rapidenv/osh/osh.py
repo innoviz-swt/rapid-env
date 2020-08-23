@@ -4,12 +4,13 @@ import os
 
 
 def copy_path(src, dst):
-    """
-    copy_path - mkdirs parent folder (if not exist), than either copy (file) or copytree (dir)
+    '''
+    mkdirs parent folder (if not exist), than either copy (file) or copytree (dir)
     :param src: source path
     :param dst: destination path
     :return:
-    """
+    '''
+
     src = Path(src)
     dst = Path(dst)
 
