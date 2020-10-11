@@ -14,7 +14,7 @@ def vdir(obj):
 
 
 def main():
-    argv = sys.argv[1:]  # ['osh', 'copy_path', "-h"] # "--args='c:/temp/a.txt', 'c:/temp/test/a.txt'"]
+    argv = sys.argv[1:]  # ['path', 'copy_path', "-h"] # "--args='c:/temp/a.txt', 'c:/temp/test/a.txt'"]
 
     # iteration variables
     module = rapidenv

@@ -1,33 +1,40 @@
 import subprocess
 from pathlib import Path, WindowsPath, PosixPath
+import re
 
 from ..helpers.validate import validate_obj_type
 
 
-def run_process(cmd: list or str, cwd: None or str or Path = None, stdout=None, raise_exception: bool = True):
+def run_process(cmd: list or str, raise_exception: bool = True, **kwargs):
     """
     runs process using Popen at cwd as working directory (if available)
     :param cmd: if string, split into spaces separated by " "
-    :param cwd: working directory in which to run cmd, default: None.
-    :param stdout: stdout stream, default: None.
     :param raise_exception: if True exception will be raised on cmd error code, default: True.
+    :param kwargs: kwargs to pass to Popen, running subprocess.Popen(cmd, **kwargs)
 
     :return process
     """
 
     # validate
     validate_obj_type(cmd, 'cmd', [str, list])
-    validate_obj_type(cwd, 'cwd', [type(None), str, Path, WindowsPath, PosixPath])
+    kwargs.get('cwd') and validate_obj_type(kwargs['cwd'], 'cwd', [type(None), str, Path, WindowsPath, PosixPath])
 
     # split cmd to list if string
     if type(cmd) is str:
+        # sstr = "<#>"
+        # # change spaces inside "", or '' to special character sequence
+        # m = True
+        # while m:
+        #     # search for
+        #     m = re.search('(\")(.*?)(\")', cmd)
+        #     rep = m[0].replace(' ', sstr)
+        #     cmd.replace(m[0], rep)
         cmd = cmd.split(' ')
 
+    # exit(0)
+
     # run subprocess
-    if cwd is not None:
-        p = subprocess.Popen(cmd, cwd=cwd, stdout=stdout)
-    else:
-        p = subprocess.Popen(cmd, stdout=stdout)
+    p = subprocess.Popen(cmd, **kwargs)
 
     p.wait()
 
@@ -41,3 +48,12 @@ def run_process(cmd: list or str, cwd: None or str or Path = None, stdout=None, 
     return p
 
 
+def run_process_with_stdout(cmd: list or str, raise_exception: bool = True, **kwargs):
+    # validate stdout not defined in kwargs
+    if kwargs.get('stdout'):
+        raise RuntimeError("run_process_with_stdout defines stdout and returns stdout as decoded string.")
+
+    p = run_process(cmd, raise_exception, stdout=subprocess.PIPE, **kwargs)
+    stdout = p.stdout.read().decode()
+
+    return stdout

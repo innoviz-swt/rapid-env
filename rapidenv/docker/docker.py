@@ -3,7 +3,7 @@
 # docker run -it innovizswt/swt-xenial-docker:0.0.0 --rm --name swtxenial
 import subprocess
 
-from rapidenv.process import run_process
+from rapidenv.process import run_process, run_process_with_stdout
 
 __SPACER__ = '    '
 
@@ -14,8 +14,7 @@ def rm_all():
     """
     # get ids of running container
     ids = []
-    p = run_process('docker ps -a', stdout=subprocess.PIPE)
-    stdout = p.stdout.read().decode()
+    stdout = run_process_with_stdout('docker ps -a')
     # assumption: first line is header, last line is empty
     for line in stdout.split('\n')[1:-1]:
         ids += [line.split(f'{__SPACER__}')[0]]

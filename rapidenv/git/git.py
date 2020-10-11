@@ -1,7 +1,6 @@
 from pathlib import Path
 
-from ..helpers.validate import validate_obj_type
-from ..osh import copy_path
+from ..path import copy_path
 
 
 def add_gitignore(path: str or Path = '.'):
