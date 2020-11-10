@@ -88,3 +88,6 @@ tmp
 
 # rapidenv
 .dev
+
+# autogrnerated
+/rapidenv/version.py

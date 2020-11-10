@@ -27,19 +27,24 @@ def str_split(cmd):
         # update offset for original string
         o += r[1]
 
-    cmd = tcmd.split(' ')
+    tcmd = tcmd.split(' ')
 
     # resore spaces replaced by special string
-    for i in range(len(cmd)):
-        s = cmd[i]
+    cmd = []
+    for i in range(len(tcmd)):
+        s = tcmd[i]
         s = s.replace(sstr, ' ')
         # remove apostrophes if are part of string
-        if len(cmd) > 2 and s[0] == "\'" and s[-1] == "\'":
+        if len(s) > 2 and s[0] == "\'" and s[-1] == "\'":
             s = s[1:-1]
-        elif len(cmd) > 2 and s[0] == "\"" and s[-1] == "\"":
+        elif len(s) > 2 and s[0] == "\"" and s[-1] == "\"":
             s = s[1:-1]
 
-        cmd[i] = s
+        # skip empty (multiple spaces)
+        if len(s) == 0:
+            continue
+
+        cmd += [s]
 
     return cmd
 
@@ -61,10 +66,6 @@ def run_process(cmd: list or str, raise_exception: bool = True, **kwargs):
     # split cmd to list if string
     if type(cmd) is str:
         cmd = str_split(cmd)
-    elif type(cmd) is str:
-        cmd = cmd.split(' ')
-
-    exit(0)
 
     # run subprocess
     p = subprocess.Popen(cmd, **kwargs)
