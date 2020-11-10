@@ -4,10 +4,10 @@ import shutil
 
 import pytest
 
-from .helpers import tmp_folder
+from test_utils.helpers import tmp_folder
+from test_utils.context import rapidenv
 
-from .context import rapidenv
-from rapidenv.path import copy_path
+from rapidenv.osh import copy_path
 from rapidenv.conan import run_conan
 
 

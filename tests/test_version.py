@@ -3,7 +3,8 @@ import os
 import re
 import pytest
 
-from .context import rapidenv
+from test_utils.context import rapidenv
+
 from rapidenv import __version__, __build__
 
 
