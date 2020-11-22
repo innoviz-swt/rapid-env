@@ -49,7 +49,7 @@ def dist(ver):
     # create tag
     # todo: improve tag message
     run_process(f'git tag -a {ver} -m "rapid env version {ver}"')
-    run_process('git push --follow-tags"')
+    run_process('git push --follow-tags')
 
     print('## distribute to pypi')
     run_process(f"{pycmd} -m pip install {user_flag} --upgrade setuptools wheel twine")
