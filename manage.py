@@ -7,7 +7,7 @@ from rapidenv.osh import run_process_with_stdout, run_process
 
 
 def get_release(branch):
-    release_pattern = r'release_(\d+).(\d+).(\d+)'
+    release_pattern = r'release-(\d+).(\d+).(\d+)'
     m = re.match(release_pattern, branch)
     if m is None:
         ret = False, "0.0.0"
@@ -48,25 +48,21 @@ def dist(ver):
 
     # create tag
     # todo: improve tag message
-    # run_process(f'git tag -a {ver} -m "rapid env version {ver}"')
+    run_process(f'git tag -a {ver} -m "rapid env version {ver}"')
+    run_process('git push --follow-tags"')
 
     print('## distribute to pypi')
     run_process(f"{pycmd} -m pip install {user_flag} --upgrade setuptools wheel twine")
     run_process(f"{pycmd} setup.py sdist bdist_wheel")
-    # run_process(f"{pycmd} -m twine upload --repository pypi dist/*")
+    run_process(f"{pycmd} -m twine upload --repository pypi dist/*")
 
     print('## remove version file')
     os.remove(f"{libname}/version.py")
 
 
 def main():
-    # run pytest
-    # cmd = (Path('.dev').exists() and ['-m', "not dist"]) or ['-m', "not dev"]
-    # pytest.main(cmd)
-
     # get git branch
-    # branch = run_process_with_stdout('git rev-parse --abbrev-ref HEAD').strip()
-    branch = "release_0.0.0"
+    branch = run_process_with_stdout('git rev-parse --abbrev-ref HEAD').strip()
 
     # check for release
     release, ver = get_release(branch)

@@ -7,6 +7,11 @@ Library with helpers for rapid development environment ramp up, build and distri
 * conan - conan helpers, wrapping some [conan](https://conan.io/) command lines and flows.
 * docker - docker helpers, wrapping some [docker](https://www.docker.com/) command lines and flows.
 
+## installation
+```commandline
+pip install rapid-env
+```
+
 ## command line support
 run as module via command line.  
 ```
