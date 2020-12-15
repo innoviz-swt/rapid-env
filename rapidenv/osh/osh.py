@@ -68,16 +68,22 @@ def run_process(cmd: list or str, raise_exception: bool = True, **kwargs):
         cmd = str_split(cmd)
 
     # run subprocess
-    p = subprocess.Popen(cmd, **kwargs)
+    try:
+        p = subprocess.Popen(cmd, **kwargs)
 
-    p.wait()
+        p.wait()
 
-    # validate error code
-    if p.returncode != 0:
-        msg = f"process exited with error code '{p.returncode}'"
-        print(msg)
+        # validate error code
+        if p.returncode != 0:
+            msg = f"process exited with error code '{p.returncode}'"
+            print(msg)
+            if raise_exception:
+                raise Exception(msg)
+    except Exception as e:
         if raise_exception:
-            raise Exception(msg)
+            raise e
+        else:
+            p = None
 
     return p
 
@@ -87,8 +93,9 @@ def run_process_with_stdout(cmd: list or str, raise_exception: bool = True, **kw
     if kwargs.get('stdout'):
         raise RuntimeError("run_process_with_stdout defines stdout and returns stdout as decoded string.")
 
-    p = run_process(cmd, raise_exception, stdout=subprocess.PIPE, **kwargs)
-    stdout = p.stdout.read().decode()
+    p = run_process(cmd, raise_exception=raise_exception, stdout=subprocess.PIPE, **kwargs)
+
+    stdout = p.stdout.read().decode() if p else None
 
     return stdout
 

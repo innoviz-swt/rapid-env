@@ -57,6 +57,9 @@ __pycache__
 *.pyc
 *.egg-info
 
+# Pyinstaller
+*.spec
+
 # pytest
 .pytest_cache
 
@@ -74,10 +77,8 @@ __pycache__
 *.dll
 *.exe
 
-# dist
+# distribution
 dist
-
-# build
 build
 
 # tmp
