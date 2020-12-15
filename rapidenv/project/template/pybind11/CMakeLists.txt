@@ -1,0 +1,31 @@
+cmake_minimum_required(VERSION 3.5.2)
+
+project(cppmodule)
+
+set(BINARY_DIR ${PROJECT_SOURCE_DIR}/cppmodule)
+
+if (UNIX)
+## Set the output folder where your program will be created
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${BINARY_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${BINARY_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BINARY_DIR})
+endif (UNIX)
+
+if(WIN32)
+## Set the output folder where your program will be created
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${BINARY_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${BINARY_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${BINARY_DIR})
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${BINARY_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${BINARY_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${BINARY_DIR})
+endif(WIN32)
+
+add_subdirectory(pybind11)
+
+pybind11_add_module(${PROJECT_NAME} src/main.cpp)
+
+if(WIN32)
+set_target_properties(${PROJECT_NAME} PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY ${BINARY_DIR})
+endif(WIN32)
