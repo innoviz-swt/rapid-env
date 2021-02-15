@@ -1,16 +1,15 @@
 version: 2.1
 
 jobs:
+  enviroment:
   test:
     docker:
       - image: innovizswt/swt-base:1.0.0-ubuntu-16.04
     steps:
       - checkout
-      - run: 
-          command: set $PATH=$PYENV_ROOT/shims:$PATH
-          name: update path
       - run:
           command: |
+            export PATH=$PYENV_ROOT/shims:$PATH
             pyenv global 3.9.1
             python --version
             python envsetup.py
