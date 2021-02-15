@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           command: |
-            python env_setup.py
+            python envsetup.py
             python manage.py
           name: Test
           
