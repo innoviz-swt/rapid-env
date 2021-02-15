@@ -8,8 +8,7 @@ jobs:
       - checkout
       - run:
           command: |
-            pwd
-            pyenv
+            source ~/.bashrc 
             which python
             python --version
             python envsetup.py
