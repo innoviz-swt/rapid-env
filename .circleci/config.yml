@@ -8,6 +8,8 @@ jobs:
       - checkout
       - run:
           command: |
+            pwd
+            pyenv
             which python
             python --version
             python envsetup.py
