@@ -1,18 +1,16 @@
 version: 2.1
 
-docker:
-  - image: innovizswt/swt-base:1.0.0-ubuntu-16.04
-
 jobs:
   test:
+    docker:
+      - image: innovizswt/swt-base:1.0.0-ubuntu-16.04
     steps:
       - run:
           command: |
             python env_setup.py
             python manage.py
           name: Test
-
-
+          
 workflows:
   main:
     jobs:
