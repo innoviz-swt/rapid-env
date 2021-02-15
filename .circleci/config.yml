@@ -9,6 +9,8 @@ jobs:
       - run:
           shell: "/bin/bash -eo pipefail -l"
           command: |
+            cd ~
+            pwd
             which python
             python --version
             python envsetup.py
