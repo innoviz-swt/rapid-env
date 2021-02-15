@@ -5,6 +5,7 @@ jobs:
     docker:
       - image: innovizswt/swt-base:1.0.0-ubuntu-16.04
     steps:
+      - checkout
       - run:
           command: |
             python env_setup.py
