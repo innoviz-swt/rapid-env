@@ -7,12 +7,7 @@ from rapidenv.osh import run_process_with_stdout, run_process
 
 venvbase = Path("venv/Scripts")
 pytestcmd = venvbase / "pytest"
-if 'linux' in sys.platform:
-    pycmd = venvbase / "python3"
-    user_flag = "--user"
-elif sys.platform == 'win32':
-    pycmd = venvbase / "python"
-    user_flag = ""
+pycmd = venvbase / "python"
 
 
 def get_release(branch):
@@ -56,7 +51,7 @@ def dist(ver):
 
     # update relevant libraries
     run_process(f'{pycmd} -m pip install --upgrade pip')
-    run_process(f"{pycmd} -m pip install {user_flag} --upgrade setuptools wheel twine")
+    run_process(f"{pycmd} -m pip install --upgrade setuptools wheel twine")
 
     print('## distribute to pypi')
     run_process(f"{pycmd} setup.py sdist bdist_wheel")
