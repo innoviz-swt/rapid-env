@@ -9,12 +9,9 @@ jobs:
       - run:
           shell: "/bin/sh"
           command: |
-            cd ~
-            pwd
-            which python
-            python --version
-            python envsetup.py
-            python manage.py
+            $(pyenv which python) --version
+            $(pyenv which python) envsetup.py
+            $(pyenv which python) manage.py
           name: Test
           
 workflows:
