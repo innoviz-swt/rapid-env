@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - run:
-          shell: "/bin/bash -leo pipefail"
+          shell: "/bin/bash -eo pipefail -l"
           command: |
             which python
             python --version
