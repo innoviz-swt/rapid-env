@@ -8,10 +8,8 @@ jobs:
       - checkout
       - run:
           command: |
-            source ~/.bashrc && which python
-            source ~/.bashrc && python --version
-            python envsetup.py
-            python manage.py
+            source ~/.bashrc && python envsetup.py
+            source ~/.bashrc && python manage.py
           name: Test
           
 workflows:
