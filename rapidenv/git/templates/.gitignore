@@ -63,8 +63,8 @@ __pycache__
 # pytest
 .pytest_cache
 
-# pyinstaller
-*.spec
+# pybind11
+pybind11
 
 # local files
 **.local.*

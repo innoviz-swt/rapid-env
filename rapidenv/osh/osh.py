@@ -95,7 +95,7 @@ def run_process_with_stdout(cmd: list or str, raise_exception: bool = True, **kw
 
     p = run_process(cmd, raise_exception=raise_exception, stdout=subprocess.PIPE, **kwargs)
 
-    stdout = p.stdout.read().decode() if p else None
+    stdout = p.stdout.read().decode().strip() if p else None
 
     return stdout
 
