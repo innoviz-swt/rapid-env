@@ -1,43 +1,20 @@
 version: 2.1
 
-orbs:
-  python: circleci/python@0.2.1
+docker:
+  - image: innovizswt/swt-base:1.0.0-ubuntu-16.04
 
 jobs:
-  build-and-test:
+  test:
     executor: python/default
     steps:
-      - checkout
-      - python/load-cache
-      - python/install-deps
-      - python/save-cache
       - run:
           command: |
-            # pytest would be a dep in requirements.txt
-            python3 -m py.test -m "not dist"
+            python env_setup.py
+            python manage.py
           name: Test
 
-  deploy-test:
-    executor: python/default
-    steps:
-      - checkout
-      - python/load-cache
-      - python/install-deps
-      - python/save-cache
-      - run:
-          command: |
-            # pytest would be a dep in requirements.txt
-            python3 -m py.test -m dist
-          name: Test
 
 workflows:
   main:
     jobs:
-      - build-and-test
-      - deploy-test:
-          requires:
-            - build-and-test
-          filters:
-            branches:
-              only:
-                - master
+      - test
