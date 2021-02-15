@@ -7,9 +7,12 @@ jobs:
     steps:
       - checkout
       - run:
+          shell: "/bin/bash -leo pipefail"
           command: |
-            source ~/.bashrc && python envsetup.py
-            source ~/.bashrc && python manage.py
+            which python
+            python --version
+            python envsetup.py
+            python manage.py
           name: Test
           
 workflows:
