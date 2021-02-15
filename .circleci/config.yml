@@ -7,7 +7,6 @@ jobs:
     steps:
       - checkout
       - run:
-          shell: "/bin/sh"
           command: |
             pyenv global 3.9.1
             python --version
