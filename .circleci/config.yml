@@ -19,7 +19,7 @@ jobs:
           command: |
             export PATH=$PYENV_ROOT/shims:$PATH
             pyenv install << parameters.python-version >>
-            pyenv global << parameters.python-version >>
+            pyenv global << parameters.python-version >> 3.9.1
             python --version
             python envsetup.py
             python manage.py
