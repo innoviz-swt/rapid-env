@@ -10,7 +10,8 @@ jobs:
       - run:
           command: |
             export PATH=$PYENV_ROOT/shims:$PATH
-            pyenv global 3.9.1
+            pyenv install <<parameters.version>>
+            pyenv global <<parameters.version>>
             python --version
             python envsetup.py
             python manage.py
@@ -19,4 +20,9 @@ jobs:
 workflows:
   main:
     jobs:
-      - test
+      - test:
+          matrix:
+            parameters:
+              version:
+                - 3.6.0
+                - 3.9.0
