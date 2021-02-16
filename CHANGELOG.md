@@ -1,5 +1,8 @@
 # Rapid Env Changelog
 
+# 0.0.3 
+- osh, run_process: kargs cwd get special handling, changing to abs path cmd starting with './' for Windows and Posix unifrom behavior.
+
 # 0.0.2
 - osh : 
     - run_process 

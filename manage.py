@@ -5,9 +5,9 @@ from pathlib import Path
 
 from rapidenv.osh import run_process_with_stdout, run_process
 
-venvbase = Path("venv/Scripts")
+from envsetup import venvbase, pycmd
+
 pytestcmd = venvbase / "pytest"
-pycmd = venvbase / "python"
 
 
 def get_release(branch):
@@ -23,12 +23,12 @@ def get_release(branch):
 
 def test():
     print("## run distribution tests")
-    run_process(f'{pytestcmd} -m "not dist"', cwd="./tests")
+    run_process(f'./{pytestcmd} -m "not dist"', cwd="./tests")
 
 
 def dist(ver):
     print("## run distribution tests")
-    run_process(f'{pytestcmd} -m "not dev"', cwd="./tests")
+    run_process(f'./{pytestcmd} -m "not dev"', cwd="./tests")
 
     # # get git branch
     # branch = run_process_with_stdout('git rev-parse --abbrev-ref HEAD')

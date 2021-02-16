@@ -54,7 +54,9 @@ def run_process(cmd: list or str, raise_exception: bool = True, **kwargs):
     runs process using Popen at cwd as working directory (if available)
     :param cmd: if string, split into spaces separated by " "
     :param raise_exception: if True exception will be raised on cmd error code, default: True.
-    :param kwargs: kwargs to pass to Popen, running subprocess.Popen(cmd, **kwargs)
+    :param kwargs: kwargs to pass to Popen, running subprocess.Popen(cmd, **kwargs) 
+    karg cwd get special handling, changing to abs path cmd starting with './'
+    for Windows and Posix unifrom behavior.
 
     :return process
     """
@@ -66,6 +68,14 @@ def run_process(cmd: list or str, raise_exception: bool = True, **kwargs):
     # split cmd to list if string
     if type(cmd) is str:
         cmd = str_split(cmd)
+
+    # Cross platfrom cwd handling
+    # if the cwd argument of Popen is used, then, in Python3:
+    # on POSIX-platforms, the current working directory gets changed to cwd *before* the above interpretation happens, i.e., if executable or args[0] contains a dirname, the executable is looked for relative to cwd.
+    # On Windows, however, cwd becomes the current working directory of the new process, but is *not* used during the executable lookup.
+    # https://bugs.python.org/issue15533
+    if len(cmd) > 1 and cmd[0][:2] == './':
+        cmd[0] = os.path.abspath(cmd[0])
 
     # run subprocess
     try:
