@@ -4,6 +4,12 @@ executors:
   ubunto-16_04:
     docker:
       - image: innovizswt/swt-base:1.0.0-ubuntu-16.04
+  ubunto-18_04:
+    docker:
+      - image: innovizswt/swt-base:1.0.0-ubuntu-18.04
+  ubunto-20_04:
+    docker:
+      - image: innovizswt/swt-base:1.0.0-ubuntu-20.04
 
 jobs:
   test:
@@ -31,5 +37,5 @@ workflows:
       - test:
           matrix:
             parameters:
-              os: [ubunto-16_04]
-              python-version: ["3.6.0", "3.9.0"]
+              os: [ubunto-16_04, ubunto-18_04, ubunto-20_04]
+              python-version: ["3.6.0", "3.7.0", "3.8.0", "3.9.0"]
