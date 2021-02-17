@@ -1,17 +1,31 @@
 version: 2.1
 
-jobs:
-  enviroment:
-  test:
+executors:
+  ubunto-16_04:
     docker:
       - image: innovizswt/swt-base:1.0.0-ubuntu-16.04
+  ubunto-18_04:
+    docker:
+      - image: innovizswt/swt-base:1.0.0-ubuntu-18.04
+  ubunto-20_04:
+    docker:
+      - image: innovizswt/swt-base:1.0.0-ubuntu-20.04
+
+jobs:
+  test:
+    parameters:
+      os:
+        type: executor
+      python-version:
+        type: string
+    executor: << parameters.os >>
     steps:
       - checkout
       - run:
           command: |
             export PATH=$PYENV_ROOT/shims:$PATH
-            pyenv install <<parameters.version>>
-            pyenv global <<parameters.version>>
+            pyenv install << parameters.python-version >>
+            pyenv global << parameters.python-version >> 3.9.1
             python --version
             python envsetup.py
             python manage.py
@@ -23,6 +37,5 @@ workflows:
       - test:
           matrix:
             parameters:
-              version:
-                - 3.6.0
-                - 3.9.0
+              os: [ubunto-16_04, ubunto-18_04, ubunto-20_04]
+              python-version: ["3.6.0", "3.7.0", "3.8.0", "3.9.0"]
