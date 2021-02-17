@@ -7,7 +7,7 @@ import pytest
 from test_utils.helpers import tmp_folder
 from test_utils.context import rapidenv
 
-from rapidenv.osh import copy_path
+from rapidenv.osh import copy
 from rapidenv.conan import run_conan
 
 
@@ -17,7 +17,7 @@ def test_run_conan_file_found():
     src = Path(__file__).parent / 'conan_test_vector' / 'conanfile.tv.txt'
     tmpf = tmp_folder(__file__)
     dst = tmpf / 'conanfile.txt'
-    copy_path(src, dst)
+    copy(src, dst)
     run_conan()
 
     # validate one of conan outputs exist

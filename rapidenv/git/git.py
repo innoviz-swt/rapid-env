@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from ..osh import copy_path
+from ..osh import copy
 
 
 def add_gitignore(path: str or Path = '.'):
@@ -9,4 +9,4 @@ def add_gitignore(path: str or Path = '.'):
     :param path: folder path, default '.' (working directory)
     :return:
     """
-    copy_path(Path(__file__).parent / 'templates' / '.gitignore', Path(path) / '.gitignore')
+    copy(Path(__file__).parent / 'templates' / '.gitignore', Path(path) / '.gitignore')

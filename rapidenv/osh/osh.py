@@ -110,14 +110,14 @@ def run_process_with_stdout(cmd: list or str, raise_exception: bool = True, **kw
     return stdout
 
 
-def copy_path(src, dst, makedirs=True, skip_dst_exists=False):
+def copy(src, dst, makedirs=True, skip_dst_exists=False):
     """
     copy (file) or copytree (dir)
     if src doesn't exist FileExistsError is thrown
 
     src    dst            action
     ----   -------------  ---------------------------------------
-    file   file           src file is overwritten
+    file   file           dst file is overwritten
     file   dir            src file is copied to dst/file
     file   doesn't exist  src file is copied to dst path
     dir    file           Exception is thrown
@@ -139,7 +139,8 @@ def copy_path(src, dst, makedirs=True, skip_dst_exists=False):
         raise FileExistsError(f"src '{src.absolute()}' does not exists")
 
     if src.is_dir() and dst.is_file():
-        raise Exception(f"can't copy dir to file. '{src}' is dir, '{dst}' is file. ")
+        raise Exception(f"can't copy dir to file. '{src}' is dir, "
+                        f"'{dst}' is file. ")
 
     # explicit dst path in case src is file and dst is dir
     if src.is_file() and dst.is_dir():

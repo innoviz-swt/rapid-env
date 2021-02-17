@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
 
-from rapidenv.osh import run_process, copy_path
+from rapidenv.osh import run_process, copy
 
 if sys.platform == 'win32':
     venvpath = Path('venv')
