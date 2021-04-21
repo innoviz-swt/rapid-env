@@ -3,13 +3,13 @@ version: 2.1
 executors:
   ubunto-16_04:
     docker:
-      - image: innovizswt/swt-base:1.0.0-ubuntu-16.04
+      - image: innovizswt/swt-base:1.0.1-ubuntu-16.04
   ubunto-18_04:
     docker:
-      - image: innovizswt/swt-base:1.0.0-ubuntu-18.04
+      - image: innovizswt/swt-base:1.0.1-ubuntu-18.04
   ubunto-20_04:
     docker:
-      - image: innovizswt/swt-base:1.0.0-ubuntu-20.04
+      - image: innovizswt/swt-base:1.0.1-ubuntu-20.04
 
 jobs:
   test:
@@ -23,7 +23,6 @@ jobs:
       - checkout
       - run:
           command: |
-            export PATH=$PYENV_ROOT/shims:$PATH
             pyenv install << parameters.python-version >>
             pyenv global << parameters.python-version >> 3.9.1
             python --version
