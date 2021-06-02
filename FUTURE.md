@@ -1,6 +1,7 @@
 # FUTURE
 
-
+## project
+- alias for manage.py. see template\mng.py
 ## vs code
 - list-extensions
 ```
