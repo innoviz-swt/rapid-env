@@ -2,7 +2,7 @@
 
 # 0.0.3 
 - osh
-    - run_process: kargs cwd get special handling, changing to abs path cmd starting with './' for Windows and uniform behavior.
+    - run_process: kargs cwd get special handling, changing to abs path cmd starting with './' for Windows and POSIX uniform behavior.
     - copy_path renamed to copy
     - copy_large, and copy_large_file added
 
@@ -13,7 +13,6 @@
     - run_process_with_stdout 
         - added a build-in strip on the returned value
         - in case of exception and raise_exception flag set to False, return None 
-        - ret value (str) after steip()
 
 # 0.0.1
 - added __main__.py allowing running functions from cmd using python -m rapidenv  

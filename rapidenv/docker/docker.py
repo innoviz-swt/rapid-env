@@ -1,5 +1,3 @@
-import subprocess
-
 from rapidenv.osh import run_process, run_process_with_stdout
 
 __SPACER__ = '    '
