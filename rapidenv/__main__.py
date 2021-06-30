@@ -26,7 +26,7 @@ def main():
                                                             f'an environment helpers utility.',
                                      add_help=False)
     entries = vdir(module)
-    parser.add_argument('opt', type=str, choices=entries)
+    parser.add_argument('opt', nargs='?', default="",  type=str, choices=entries)
     parser.add_argument('-h', '--help', action='store_true', help='show this help menu and exit.')
 
     # print help if no arguments and exit
@@ -55,15 +55,13 @@ def main():
         parser = argparse.ArgumentParser(prog=prog, description=f'{prog} helpers utilities.',
                                          add_help=False)
         entries = vdir(module)
-        parser.add_argument('opt', type=str, choices=entries)
+        parser.add_argument('opt', nargs='?', type=str, choices=entries)
         parser.add_argument('-h', '--help', action='store_true', help='show this help menu and exit.')
 
-        # if help is next arg, print help and exit
-        if len(argv) > 0 and (argv[0] == "-h" or argv[0] == "--help"):
+        # if no opt print help and exit
+        if args.opt is None:
             parser.print_help()
             return 0
-        else:
-            args = parser.parse_known_args(argv)[0]
 
     # handle function
     obj = getattr(module, args.opt)
@@ -97,8 +95,6 @@ def main():
     else:
         # should never get here
         print(f"'{args.opt}' is not supported.")
-
-    print('here')
 
 
 if __name__ == "__main__":

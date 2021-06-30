@@ -1,12 +1,14 @@
 import sys
 import re
 import os
+import argparse
 from pathlib import Path
 
 from rapidenv.osh import run_process_with_stdout, run_process
 
 from envsetup import venvbase, pycmd
 
+root = Path(__file__).parent
 pytestcmd = venvbase / "pytest"
 
 
@@ -21,14 +23,23 @@ def get_release(branch):
     return ret
 
 
-def test():
-    print("## run distribution tests")
-    run_process(f'./{pytestcmd} -m "not dist"', cwd="./tests")
+def test_dev():
+    print("## run dev tests")
+    run_process(f'./{pytestcmd} -v -m "not dist"', cwd="./tests")
+
+
+def test_dist():
+    print("## install rapidenv and run tests")
+    run_process(f'./{pycmd} -m pip install . -I')
+    p = run_process(f'./{pytestcmd} -v -m "not dev"', cwd="./tests", raise_exception=False)
+    run_process(f'./{pycmd} -m pip uninstall rapid-env -y')
+    if p is None:
+        raise RuntimeError("tests failed")
 
 
 def dist(ver):
-    print("## run distribution tests")
-    run_process(f'./{pytestcmd} -m "not dev"', cwd="./tests")
+    print("## install locally and test distribution")
+    test_dist()
 
     # # get git branch
     # branch = run_process_with_stdout('git rev-parse --abbrev-ref HEAD')
@@ -49,11 +60,9 @@ def dist(ver):
         f.write(f"__version__ = '{ver}'\n")
         f.write(f"__build__ = '{commit}'\n")
 
-    # update relevant libraries
+    print('## distribute to pypi')
     run_process(f'{pycmd} -m pip install --upgrade pip')
     run_process(f"{pycmd} -m pip install --upgrade setuptools wheel twine")
-
-    print('## distribute to pypi')
     run_process(f"{pycmd} setup.py sdist bdist_wheel")
     run_process(f"{pycmd} -m twine upload --repository pypi dist/*")
 
@@ -66,14 +75,37 @@ def dist(ver):
     os.remove(f"{libname}/version.py")
 
 
-def main():
-    # get version
-    ver = (len(sys.argv) > 1 and sys.argv[1]) or '0.0.0'
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='manage py')
 
-    if ver == '0.0.0':
-        test()
-    else:
-        dist(ver)
+    parser.add_argument('ver', nargs='?', default="0.0.0", help='distribution version')
+
+    parser.add_argument('--test-dev', '-td', dest='test_dev', action='store_true',
+                        help='build the project')
+
+    parser.add_argument('--test-dist', '-t', dest='test_dist', action='store_true',
+                        help='build the project')
+
+    parser.add_argument('--dist', '-d', dest='dist', action='store_true',
+                        help='distribute the project')
+
+    args = parser.parse_args()
+
+    return args
+
+
+def main():
+    os.chdir(root)
+    args = parse_arguments()
+
+    if args.test_dev:
+        test_dev()
+
+    if args.test_dist:
+        test_dist()
+
+    if args.dist:
+        dist(args.ver)
 
     print('')
     print('done')

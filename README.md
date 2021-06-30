@@ -12,13 +12,23 @@ Library with helpers for rapid development environment ramp up, build and distri
 pip install rapid-env
 ```
 
-## command line support
-run as module via command line.  
-```
-python -m rapidenv
-```
-
-## library usage 
+## Usage
+### from code
 ``` python
 import rapidenv
 ```
+
+### from command line
+run as module via command line.
+```commandline
+renv
+```
+or
+```commandline
+python -m rapidenv
+```
+
+### cmd helpers
+- mng: running manage.py 'def main()' function from project root.  
+  project root located searching .git in current and parent folder recursively.
+  

@@ -1,26 +1,34 @@
 import sys
 from pathlib import Path
-
-from rapidenv.osh import run_process, copy
+import subprocess
 
 if sys.platform == 'win32':
     venvpath = Path('venv')
     venvbase = venvpath / "Scripts"
+    pyexe = 'python'
 else:  # unix
     venvpath = Path('env')
     venvbase = venvpath / "bin"
+    pyexe = 'python3'
 
 pycmd = venvbase / "python"
 
 
+def venv_run_process(cmd: str, **kwargs):
+    # run subprocess
+    p = subprocess.Popen(cmd, **kwargs)
+
+    p.wait()
+
+
 def main():
     # python environment
-    run_process(f'python -m pip install --upgrade pip')
+    venv_run_process(f'{pyexe} -m pip install --upgrade pip')
     if not venvpath.exists():
-        run_process(f'python -m venv {venvpath}')
+        venv_run_process(f'{pyexe} -m venv {venvpath}')
 
-    run_process(f'{venvbase}/python -m pip install --upgrade pip')
-    run_process(f'{venvbase}/python -m pip install -r requirements.txt')
+    venv_run_process(f'{pycmd} -m pip install --upgrade pip')
+    venv_run_process(f'{pycmd} -m pip install -r tests/test-requirements.txt')
 
 
 if __name__ == '__main__':

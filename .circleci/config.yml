@@ -27,7 +27,7 @@ jobs:
             pyenv global << parameters.python-version >> 3.9.1
             python --version
             python envsetup.py
-            python manage.py
+            python manage.py -t
           name: Test
           
 workflows:

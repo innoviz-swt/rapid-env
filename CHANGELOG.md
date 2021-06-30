@@ -1,6 +1,9 @@
 # Rapid Env Changelog
 
 # 0.0.3 
+- console_scripts:
+    - added mng console script running manage.py 'def main()' function from project root (located searching .git in folder)   
+
 - osh
     - run_process: kargs cwd get special handling, changing to abs path cmd starting with './' for Windows and POSIX uniform behavior.
     - copy_path renamed to copy
