@@ -1,0 +1,9 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.158.0/containers/python-3
+{
+	"name": "rapid-env",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"context": ".."
+	}
+}

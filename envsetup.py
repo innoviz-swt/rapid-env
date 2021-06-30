@@ -1,6 +1,7 @@
 import sys
 from pathlib import Path
 import subprocess
+import os
 
 if sys.platform == 'win32':
     venvpath = Path('venv')
@@ -9,16 +10,14 @@ if sys.platform == 'win32':
 else:  # unix
     venvpath = Path('env')
     venvbase = venvpath / "bin"
-    pyexe = 'python'
+    pyexe = 'python3'
 
 pycmd = venvbase / "python"
 
 
 def venv_run_process(cmd: str, **kwargs):
     # run subprocess
-    p = subprocess.Popen(cmd, **kwargs)
-
-    p.wait()
+    os.system(cmd)
 
 
 def main():
