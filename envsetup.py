@@ -9,7 +9,7 @@ if sys.platform == 'win32':
 else:  # unix
     venvpath = Path('env')
     venvbase = venvpath / "bin"
-    pyexe = 'python3'
+    pyexe = 'python'
 
 pycmd = venvbase / "python"
 
