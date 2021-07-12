@@ -33,7 +33,7 @@ def test_dist():
     run_process(f'./{pycmd} -m pip install . -I')
     p = run_process(f'./{pytestcmd} -v -m "not dev"', cwd="./tests", raise_exception=False)
     run_process(f'./{pycmd} -m pip uninstall rapid-env -y')
-    if p is None:
+    if p.returncode:
         raise RuntimeError("tests failed")
 
 
@@ -108,7 +108,7 @@ def main():
         dist(args.ver)
 
     print('')
-    print('done')
+    print('done running manage.py')
 
 
 if __name__ == "__main__":

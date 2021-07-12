@@ -11,36 +11,55 @@ def path_in_tree(rel_path: str or Path):
     if (path / rel_path).exists():
         return (path / rel_path).absolute()
 
-    while path.parent:
+    while path.parent != path:
         if (path / rel_path).exists():
             return (path / rel_path).absolute()
         path = path.parent
 
-    return Path()
+    return None
 
 
 def root_dir():
-    return path_in_tree(".git").parent
+    ret = path_in_tree(".root")
+    ret = ret if ret is None else ret.parent
+    return ret
+
+
+def git_dir():
+    ret = path_in_tree(".git")
+    ret = ret if ret is None else ret.parent
+    return ret
 
 
 def mng():
     """
-    if manage.py exit in folder runs script
-    :return:
+    if manage.py exit in root dir (recursively searching folder containing .root or .git)
+    if so, runs main function from module
     """
-    sys.path.append(str(root_dir()))
 
-    try:
-        module = importlib.import_module('manage')
-    except ImportError:
-        print(f"unable to locate file: manage.py")
-        return
+    rd = root_dir()
+    if rd is None:
+        rd = git_dir()
 
-    try:
-        module.main()
-    except Exception as e:
-        print(f"manage.py doesn't contain 'def main()'")
+    if rd is None:
+        print(f"can't locate root dir (dir containing .git or .root)")
+        return 1
+
+    if not (rd / 'manage.py').exists():
+        print(f"unable to locate file manage.py in '{rd}'")
+        return 1
+
+    sys.path.append(str(rd))
+    module = importlib.import_module('manage')
+
+    if 'main' not in dir(module):
+        print(f"manage.py doesn't contain 'def main()'. root: '{rd}'")
+        return 1
+
+    module.main()
+
+    return 0
 
 
 if __name__ == "__main__":
-    mng()
+    exit(mng())

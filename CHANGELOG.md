@@ -1,5 +1,11 @@
 # Rapid Env Changelog
 
+# 0.0.4
+- console_scripts:mng 
+    - manage.py is searched in root folder (folder containing .root or .git)
+    - bug fix: when module import fails or running main fails exception is not caught and info hidden 
+       
+
 # 0.0.3 
 - console_scripts:
     - added mng console script running manage.py 'def main()' function from project root (located searching .git in folder)   
