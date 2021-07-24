@@ -27,6 +27,7 @@ jobs:
             pyenv global << parameters.python-version >> 3.9.1
             python --version
             python envsetup.py
+            source env/bin/activate
             python manage.py -t
           name: Test
           
