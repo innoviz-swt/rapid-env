@@ -34,7 +34,7 @@ def download_archive(url, dst, makedirs=True, skip_dst_exists=False, delete_arch
     archive = dst.parent / url.split('/')[-1]
     urllib.request.urlretrieve(url, archive)
 
-    shutil.unpack_archive(archive, extract_dir=dst)
+    shutil.unpack_archive(str(archive), extract_dir=dst)
 
     # check if unpacked folder contains only 1 folder (recursively), if so move its content to parent folder
     content = os.listdir(dst)

@@ -7,6 +7,7 @@
 - download_archive  
   download archive from url ro dst parent directory and unpack it to dst folder.
   if archive contains single folders recursively remove them placing main folder in dst.
+- python 3.6.5 and above is supported, no longer support python 3.6.0 to 3.6.5
 
 # 0.0.3 
 - console_scripts:

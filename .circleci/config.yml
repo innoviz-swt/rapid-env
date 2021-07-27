@@ -38,4 +38,4 @@ workflows:
           matrix:
             parameters:
               os: [ubunto-16_04, ubunto-18_04, ubunto-20_04]
-              python-version: ["3.6.0", "3.7.0", "3.8.0", "3.9.0"]
+              python-version: ["3.6.5", "3.7.0", "3.8.0", "3.9.0"]

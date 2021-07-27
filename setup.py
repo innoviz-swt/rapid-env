@@ -52,7 +52,7 @@ setuptools.setup(
     # Choose your license
     license='MIT',
 
-    python_requires='>=3.6',
+    python_requires='>=3.6.5',
 
     # List run-time dependencies here.  These will be installed by pip when
     # your project is installed. For an analysis of "install_requires" vs pip's
