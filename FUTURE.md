@@ -2,6 +2,11 @@
 
 ## osh
 - see download.py
+- kill process on port windows
+"""
+netstat -ano | findstr :9002
+taskkill /PID 9002 /F
+"""
 
 ## vs code
 - list-extensions

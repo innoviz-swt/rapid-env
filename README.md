@@ -2,7 +2,11 @@
 Library with helpers for rapid development environment ramp up, build and distribution. 
 
 ## SUBMODULES
-* osh - operating system helpers (path copy, running processes).
+* osh - operating system helpers
+  - copy
+  - run_process
+  - run_process_with_stdout
+  - download_archive
 * git - provides default git ignore template.
 * conan - conan helpers, wrapping some [conan](https://conan.io/) command lines and flows.
 * docker - docker helpers, wrapping some [docker](https://www.docker.com/) command lines and flows.

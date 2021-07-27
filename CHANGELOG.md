@@ -4,7 +4,9 @@
 - console_scripts:mng 
     - manage.py is searched in root folder (folder containing .root or .git)
     - bug fix: when module import fails or running main fails exception is not caught and info hidden 
-       
+- download_archive  
+  download archive from url ro dst parent directory and unpack it to dst folder.
+  if archive contains single folders recursively remove them placing main folder in dst.
 
 # 0.0.3 
 - console_scripts:
