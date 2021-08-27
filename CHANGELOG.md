@@ -1,12 +1,14 @@
 # Rapid Env Changelog
 
 # 0.0.4
+- osh:copy_large changed log to verbose flag for progress log prints control
+# 0.0.4
 - console_scripts:mng 
     - manage.py is searched in root folder (folder containing .root or .git)
-    - bug fix: when module import fails or running main fails exception is not caught and info hidden 
+    - a bug fix: when module import fails or running main fails an exception is not caught and info hidden 
 - download_archive  
-  download archive from url ro dst parent directory and unpack it to dst folder.
-  if archive contains single folders recursively remove them placing main folder in dst.
+  download the archive from URL to destination parent directory and unpack it to the destination folder.
+  if 'archive' contains single folders recursively remove them, placing the main folder in the destination.
 - python 3.6.5 and above is supported, no longer support python 3.6.0 to 3.6.5
 
 # 0.0.3 

@@ -5,7 +5,7 @@ import time
 from pathlib import Path
 
 
-def _copy_large_file(src, dst, chunk_size, copied, log):
+def _copy_large_file(src, dst, chunk_size, copied, verbose):
     '''
     Copy a large file showing progress.
     '''
@@ -16,8 +16,6 @@ def _copy_large_file(src, dst, chunk_size, copied, log):
     # Adjust the chunk size to the input size.
     if chunk_size > size:
         chunk_size = size
-    if log:
-        log(f'chunk size is {chunk_size}')
 
     # Copy.
     session_copied = 0
@@ -43,15 +41,16 @@ def _copy_large_file(src, dst, chunk_size, copied, log):
                 eststr = f'rem={est:>.1f} min, tot={est1:>.1f} min'
 
                 # Write out the status.
-                if log:
-                    print(f'{per:>6.1f}% {eststr}', end='\r')
+                print(f'{src} -> {dst} {per:>6.1f}% {eststr}, chunk_size: {chunk_size}', end='\r')
 
                 # Read in the next chunk.
                 chunk = ifp.read(chunk_size)
 
+    print(f' ' * 120, end='\r')
+
 
 def copy_large_file(src, dst, chunk_size=10 * 1024 * 1024, retries=3,
-                    retry_delay=1, log=lambda *kargs, **vargs: ()):
+                    retry_delay=1, verbose=False):
     """
     copy src file to dst file
 
@@ -61,8 +60,6 @@ def copy_large_file(src, dst, chunk_size=10 * 1024 * 1024, retries=3,
     :param retries: number of retries per file write failure
     :param retries_delay: number of dealys between retries per file write failure
     """
-    log(f'copying "{src}" --> "{dst}"')
-
     if os.path.exists(dst):
         size = os.stat(dst).st_size
         copied = [size]
@@ -71,15 +68,15 @@ def copy_large_file(src, dst, chunk_size=10 * 1024 * 1024, retries=3,
 
     # Start the timer and get the size.
     start = time.time()
-    log(f'{os.stat(src).st_size} bytes')
 
     for i in range(retries):
         try:
-            _copy_large_file(src, dst, chunk_size, copied, log)
+            _copy_large_file(src, dst, chunk_size, copied, verbose)
             break
         except Exception as e:
-            log(f"Copy failure, retry {i+1} of {retries} retries, "
-                f"{retry_delay} sec retry delay, Error: {e}")
+            if verbose:
+                print(f"{src} -> {dst} copy failure, retry {i+1} of {retries} retries, "
+                    f"{retry_delay} sec retry delay, Error: {e}", end='\r')
 
             # sanity validation
             if (os.stat(dst).st_size != copied[0]):
@@ -89,12 +86,12 @@ def copy_large_file(src, dst, chunk_size=10 * 1024 * 1024, retries=3,
             time.sleep(retry_delay)
 
     elapsed = time.time() - start
-    log()
-    log(f'copied in {elapsed:>.1f}s')
+    if verbose:
+        print(f'{src} -> {dst} copied in {elapsed:>.1f}s', end='\r')
 
 
 def copy_large(src, dst, chunk_size=10 * 1024 * 1024, retries=3,
-               retry_delay=1, makedirs=True, log=lambda *kargs, **vargs: ()):
+               retry_delay=1, makedirs=True, verbose=False):
     """
     copy (file) or copytree (dir)
     if src doesn't exist FileExistsError is thrown
@@ -114,7 +111,7 @@ def copy_large(src, dst, chunk_size=10 * 1024 * 1024, retries=3,
     :param retries: number of retries per file write failure
     :param retries_delay: number of dealys between retries per file write failure
     :param makedirs: create parent dir tree if not exists
-    :param log callback, used as print function
+    :param vectose if verbose log is printed to std out 
     :return:
     """
     src = Path(src)
@@ -152,26 +149,27 @@ def copy_large(src, dst, chunk_size=10 * 1024 * 1024, retries=3,
             # copy files
             for file in files:
                 fpath = dst / rel / file
-                copy_large_file(f"{root}/{file}", str(fpath), chunk_size,
-                                retries, retry_delay, log)
+                copy_large_file(str(Path(root) / file), str(fpath), chunk_size,
+                                retries, retry_delay, verbose)
 
     elif src.is_file():
         copy_large_file(str(src), str(dst), chunk_size, 
-                        retries, retry_delay, log)
+                        retries, retry_delay, verbose)
 
     else:
         raise RuntimeError(f"Unsupported source path type: {src}")
+
+    if verbose:
+        print()
 
 
 def main():
     src = sys.argv[1]
     dst = sys.argv[2]
 
-    def log(*vargs, **kargs):
-        print(*vargs, **kargs)
-
-    copy_large(src, dst, log=log)
+    copy_large(src, dst, verbose=True)
 
 
 if __name__ == '__main__':
     main()
+
