@@ -1,2 +1,3 @@
 rem echo $profile and echo this to file
 Set-Alias -Name activate -Value .\venv\Scripts\activate
+echo "Set-Alias -Name activate -Value .\venv\Scripts\activate" >> $profile
